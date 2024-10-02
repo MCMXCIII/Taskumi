@@ -37,6 +37,9 @@ public class Taskumi {
         // Handle incoming query requests
         server.createContext("/query", new QueryHandler());
 
+        // Handle root requests
+        server.createContext("/", new RootHandler());
+
         // Start server with the defined thread pool
         server.setExecutor(threadPool);
         server.start();
@@ -115,6 +118,18 @@ public class Taskumi {
                         System.err.println("Error forwarding query to target: " + ex.getMessage());
                         return "Error occurred while forwarding the query: " + ex.getMessage();
                     });
+        }
+    }
+
+    // Root handler for handling requests to the root path "/"
+    static class RootHandler implements HttpHandler {
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+            String response = "<h1>Welcome to Taskumi Proxy Server!</h1>";
+            exchange.sendResponseHeaders(200, response.length());
+            OutputStream os = exchange.getResponseBody();
+            os.write(response.getBytes(StandardCharsets.UTF_8));
+            os.close();
         }
     }
 }
