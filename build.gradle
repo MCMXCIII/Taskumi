@@ -28,7 +28,7 @@ dependencies {
 
 application {
     // Main class is now Taskumi
-    mainClass = 'com.taskumi.proxy.Taskumi'
+    mainClass = 'com.taskumi.Taskumi'
 }
 
 test {
